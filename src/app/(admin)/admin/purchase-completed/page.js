@@ -372,14 +372,14 @@ export default function page() {
         }
     ]);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    const dt = useRef(null);
-    const cols = [
+    const Dt = useRef(null);
+    const Cols = [
         { field: 'code', header: 'Code' },
         { field: 'name', header: 'Name' },
         { field: 'category', header: 'Category' },
         { field: 'quantity', header: 'Quantity' }
     ];
-    const exportColumns = cols.map((col) => ({ title: col.header, dataKey: col.field }))
+    const exportColumns = Cols.map((col) => ({ title: col.header, dataKey: col.field }))
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -461,7 +461,7 @@ export default function page() {
         });
     };
 
-    const renderHeader = () => {
+    const RenderHeader = () => {
         return (
             <div className="flex justify-content-end">
                 <span className="p-input-icon-left">
@@ -481,14 +481,14 @@ export default function page() {
                 <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
 
             </div>
-            {renderHeader()}
+            {RenderHeader()}
         </>
     );
     return (
         <div className="card">
             <Tooltip target=".export-buttons>button" position="bottom" />
             <DataTable
-                value={products} ref={dt} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} dataKey="id" header={header} emptyMessage="No customers found." tableStyle={{ minWidth: '50rem' }}
+                value={products} ref={Dt} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} dataKey="id" header={header} emptyMessage="No customers found." tableStyle={{ minWidth: '50rem' }}
                 filters={filters} filterDisplay="row" globalFilterFields={['code', 'name', 'category', 'quantity']}>
                 <Column field="code" sortable header="Code"
                     // filter
