@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 import { Tooltip } from 'primereact/tooltip';
 import 'primeicons/primeicons.css';
 // import { ProductService } from './service/ProductService';
-export default function page() {
+export default function Page() {
     const [products, setProducts] = useState([
         {
             id: '1000',
@@ -379,7 +379,7 @@ export default function page() {
         { field: 'category', header: 'Category' },
         { field: 'quantity', header: 'Quantity' }
     ];
-    const exportColumns = Cols.map((col) => ({ title: col.header, dataKey: col.field }))
+    const ExportColumns = Cols.map((col) => ({ title: col.header, dataKey: col.field }))
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -388,7 +388,7 @@ export default function page() {
         category: { value: null, matchMode: FilterMatchMode.EQUALS },
         quantity: { value: null, matchMode: FilterMatchMode.EQUALS }
     });
-    const initFilters = () => {
+    const InitFilters = () => {
         setFilters({
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 
@@ -406,10 +406,10 @@ export default function page() {
 
     useEffect(() => {
         //ProductService.getProductsMini().then(data => setProducts(data));
-        initFilters();
+        InitFilters();
     }, []);
 
-    const onGlobalFilterChange = (e) => {
+    const OnGlobalFilterChange = (e) => {
         const value = e.target.value;
         let _filters = { ...filters };
 
@@ -419,22 +419,22 @@ export default function page() {
         setGlobalFilterValue(value);
     };
 
-    const exportCSV = (selectionOnly) => {
+    const ExportCSV = (selectionOnly) => {
         dt.current.exportCSV({ selectionOnly });
     };
 
-    const exportPdf = () => {
+    const ExportPdf = () => {
         import('jspdf').then((jsPDF) => {
             import('jspdf-autotable').then(() => {
                 const doc = new jsPDF.default(0, 0);
 
-                doc.autoTable(exportColumns, products);
+                doc.autoTable(ExportColumns, products);
                 doc.save('products.pdf');
             });
         });
     };
 
-    const exportExcel = () => {
+    const ExportExcel = () => {
         import('xlsx').then((xlsx) => {
             const worksheet = xlsx.utils.json_to_sheet(products);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
@@ -443,11 +443,11 @@ export default function page() {
                 type: 'array'
             });
 
-            saveAsExcelFile(excelBuffer, 'products');
+            SaveAsExcelFile(excelBuffer, 'products');
         });
     };
 
-    const saveAsExcelFile = (buffer, fileName) => {
+    const SaveAsExcelFile = (buffer, fileName) => {
         import('file-saver').then((module) => {
             if (module && module.default) {
                 let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
@@ -466,7 +466,7 @@ export default function page() {
             <div className="flex justify-content-end">
                 <span className="p-input-icon-left">
                     <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+                    <InputText value={globalFilterValue} onChange={OnGlobalFilterChange} placeholder="Keyword Search" />
                 </span>
             </div>
         );
@@ -476,9 +476,9 @@ export default function page() {
     const header = (
         <>
             <div className="flex float-end align-items-center justify-content-end gap-2">
-                <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
-                <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-                <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
+                <Button type="button" icon="pi pi-file" rounded onClick={() => ExportCSV(false)} data-pr-tooltip="CSV" />
+                <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={ExportExcel} data-pr-tooltip="XLS" />
+                <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={ExportPdf} data-pr-tooltip="PDF" />
 
             </div>
             {RenderHeader()}
