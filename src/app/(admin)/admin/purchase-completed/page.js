@@ -420,7 +420,7 @@ export default function Page() {
     };
 
     const ExportCSV = (selectionOnly) => {
-        dt.current.exportCSV({ selectionOnly });
+        Dt.current.exportCSV({ selectionOnly });
     };
 
     const ExportPdf = () => {
